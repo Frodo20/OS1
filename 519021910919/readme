@@ -1,0 +1,113 @@
+General Command Manual
+
+NAME
+myshell - the My Shell
+
+DESCRIPTION
+Myshell is a command language interpreter which use the same language as csh, but much simpler, having a few command which is designed by myself, and the other commands are realized by calling the function of sh, as the first lab in the course OS.
+
+Argument List Processing
+To simplify, the argument of the command doesn't be concluded in this project.
+
+Commands Overview
+A simple command is a sequence of words, the first of which specifies the command to be executed. But ba careful, no pipeline can be used in this shell.
+The specific commands will be introduced in the following.
+
+Internal Commands
+Here we introduce the commands which can be used in the myshell
+
+1. cd <directory>
+* It helps you change from your current directory(pwd) to the directory which is specified.
+* If no argument <directory>, it will output pwd.
+* If the specified directory doesn't exist, it returns error messages.
+* If input PWD, it returns the working directory.
+* It almost realize the function cd have in the csh, like cd .. will help you back to the directory above. 
+* This command will simultaneously change the environment variable PWD.
+
+2. clr: it clear the display on the screen.
+
+3. dir <directory>: it returns all the contents in the directory, including directories and files.
+
+4. environ: it returns all the environment variables.
+
+5. echo <comment>
+* It print the contents of comment on the screen and the cursor will move to the next line.
+* If there are more than one space or tab in the comment, it should be compressed to a space.
+
+6. help: it print the readme.
+
+7. pause: it break the processing command of myshell until the user press Enter.
+
+8. quit: it turn down the project myshell.
+
+9. The environment variables include shell=<pathname>/myshell, which is the absolute path of the myshell.
+
+10. Other instructions also can be used by calling the fork and exec, which actually call the function of sh.
+
+11. The environment variable parent=<pathname>/myshell will exist when the child process is excuted.
+
+12. If myshell is used with argument, it will read the instructions from the file and excute them in sequence.
+
+myshell batchfile
+
+It will read each line of batchfile and excute, and quit when it comes to the end.
+
+
+Input / Output Redirection
+Most UNIX system commands accept input from your terminal and send the resulting output back to your terminal. A command usually reads input from a place called standard input, which happens to be your terminal by default. Similarly, a command usually writes its output to standard output. By default, it is also your terminal.
+
+The format of I/O Redirection is as follows.
+
+programname arg1 arg2 < inputfile > outputfile
+
+or
+
+programname arg1 arg2 < inputfile >> outputfile
+
+The programname is executable command, arg* is the arguments. This command get input from inputfile, not stdin; print the output to the outputfile, not the stdout;
+
+The output redirection will be used with the internal instruction of dir environ echo help containing the output, and the output result will be redirected to the file specified by the user. For example, the excution result of help > outputfile should be output to the file outputfile specified by the user.
+
+
+When using output redirection
+
+* If the string indicating redirection is >,
+** If the outputFile does not exist, a new file is created.
+** If the outputFile exists, the output overwrites the original file.
+
+* If the string indicating redirection is >>,
+** If the outputFile does not exist, a new file is created.
+** If the outputFile exists, the output is added to the back of the original file.
+
+Environment Variables
+Environment variables refer to some parameters used in the operating system to specify the operating environment of the operating system.
+
+It has the following characteristics:
+
+* Character string
+* The unified format: name = value [: value]
+* Value is used to describe the process environment information
+
+Program environment variables include system environment variables and some specific environment variables used by the program
+
+In myshell, the environment variables can be printed by
+
+environ
+
+Some environment variables have been changed:
+1. shell=<pathname>/myshell
+2. parent=<pathname>/myshell
+
+Background Executor
+When using the command terminal of Linux to execute a continuous program, if we close the terminal window, the process (foreground task) will be terminated at the same time. Therefore, we need to put it in the "background" to run (background task)
+
+A daemon is a process that runs in the background all the time
+
+The program running in the background can continue to be used without reopening, rerunning and logging in again, because it is always running, but the user does not operate it.
+
+Myshell supports the execution of background tasks. When an instruction is followed by the &, the shell does not need to wait for the instruction to finish executing to return.
+
+Authors
+Jinxing Wu, 519021910919
+
+
